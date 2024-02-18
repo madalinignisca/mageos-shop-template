@@ -1,0 +1,85 @@
+{
+  "name": "mage-os/project-community-edition",
+  "description": "eCommerce Platform for Growth (Community Edition)",
+  "type": "project",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "laminas/laminas-dependency-plugin": true,
+      "mage-os/*": true,
+      "php-http/discovery": true
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "require": {
+    "mage-os/product-community-edition": "1.0.1",
+    "mage-os/composer-root-update-plugin": "1.0.1",
+    "mage-os/composer-dependency-version-audit-plugin": "1.0.1"
+  },
+  "require-dev": {
+    "allure-framework/allure-phpunit": "^2",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "dg/bypass-finals": "^1.4",
+    "friendsofphp/php-cs-fixer": "^3.22",
+    "lusitanian/oauth": "^0.8",
+    "mage-os/magento-coding-standard": "1.0.1",
+    "mage-os/magento2-functional-testing-framework": "1.0.1",
+    "pdepend/pdepend": "^2.10",
+    "phpmd/phpmd": "^2.12",
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "^9.5",
+    "sebastian/phpcpd": "^6.0",
+    "symfony/finder": "^5.4"
+  },
+  "conflict": {
+    "gene/bluefoot": "*"
+  },
+  "extra": {
+    "magento-force": "override"
+  },
+  "autoload": {
+    "psr-4": {
+      "Magento\\Framework\\": "lib/internal/Magento/Framework/",
+      "Magento\\Setup\\": "setup/src/Magento/Setup/",
+      "Magento\\": "app/code/Magento/"
+    },
+    "psr-0": {
+      "": [
+        "app/code/",
+        "generated/code/"
+      ]
+    },
+    "files": [
+      "app/etc/NonComposerComponentRegistration.php"
+    ],
+    "exclude-from-classmap": [
+      "**/dev/**",
+      "**/update/**",
+      "**/Test/**"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Magento\\Sniffs\\": "dev/tests/static/framework/Magento/Sniffs/",
+      "Magento\\Tools\\": "dev/tools/Magento/Tools/",
+      "Magento\\Tools\\Sanity\\": "dev/build/publication/sanity/Magento/Tools/Sanity/",
+      "Magento\\TestFramework\\Inspection\\": "dev/tests/static/framework/Magento/TestFramework/Inspection/",
+      "Magento\\TestFramework\\Utility\\": "dev/tests/static/framework/Magento/TestFramework/Utility/",
+      "Magento\\PhpStan\\": "dev/tests/static/framework/Magento/PhpStan/"
+    }
+  },
+  "prefer-stable": true,
+  "version": "1.0.1",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.mage-os.org/"
+    }
+  ],
+  "minimum-stability": "stable"
+}

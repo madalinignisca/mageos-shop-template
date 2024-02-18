@@ -1,0 +1,73 @@
+services:
+  varnish:
+  nginx:
+  php_fpm:
+  
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      - MARIADB_ROOT_PASSWORD=rootpassword
+      - MARIADB_USER=magento
+      - MARIADB_PASSWORD=magento
+      - MARIADB_DATABASE=magento
+      - MARIADB_AUTO_UPGRADE=1
+    volumes:
+      - mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2048M
+  opensearch:
+    image: opensearchproject/opensearch:2
+    environment:
+      - "discovery.type=single-node"
+      - "bootstrap.memory_lock=true"
+      - "OPENSEARCH_INITIAL_ADMIN_PASSWORD=opensearch"
+      - "OPENSEARCH_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
+        hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    volumes:
+      - opensearch:/usr/share/opensearch/data # Creates volume called opensearch-data1 and mounts it to the container
+    ports:
+      - 9200:9200 # REST API
+      - 9600:9600 # Performance Analyzer
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2048M
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=magento
+      - RABBITMQ_DEFAULT_PASS=magento
+      - RABBITMQ_DEFAULT_VHOST=magento
+    ports:
+      - 5672:5672
+      - 15672:15672
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+  redis:
+    image: redis:7
+    ports:
+      - 6379:6379
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+
+volumes:
+  mariadb:
+  opensearch:
